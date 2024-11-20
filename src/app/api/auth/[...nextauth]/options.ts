@@ -2,7 +2,7 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/dbConnect';
-import UserModel from '@/model/User';
+import UserModel from '@/model/user';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
           if (!user) {
             throw new Error('No user found with this email');
           }
-          if (!user.isVerified) {
+          if (!user.isverified) {
             throw new Error('Please verify your account before logging in');
           }
           const isPasswordCorrect = await bcrypt.compare(
@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
           } else {
             throw new Error('Incorrect password');
           }
-        } catch (err: any) {
+        } catch (err: unknown) {
           throw new Error(err);
         }
       },
@@ -71,3 +71,5 @@ export const authOptions: NextAuthOptions = {
     signIn: '/sign-in',
   },
 };
+
+
